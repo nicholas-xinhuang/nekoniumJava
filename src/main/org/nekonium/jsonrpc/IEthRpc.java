@@ -394,21 +394,49 @@ public interface IEthRpc {
 	BlockResult eth_getBlockByHash(String blockHash,
 			Boolean fullTransactionObjects) throws Exception;
 
-	BlockResult eth_getBlockByNumber(String bnOrId,
-			Boolean fullTransactionObjects) throws Exception;
-
-	
-	/** Unimplmented
-	 * eth_getTransactionByHash
+	/**
+	 * Unimplmented eth_getTransactionByHash
 	 * eth_getTransactionByBlockHashAndIndex
-	 * eth_getTransactionByBlockNumberAndIndex
-	 * eth_getTransactionReceipt
+	 * eth_getTransactionByBlockNumberAndIndex eth_getTransactionReceipt
 	 * ethj_getTransactionReceipt
 	 * */
 
+	/**
+	 * Returns information about a uncle of a block by hash and uncle index
+	 * position.
+	 * 
+	 * @param blockHash
+	 *            32 Bytes - hash a block.
+	 * @param uncleIdx
+	 *            the uncle's index position.
+	 * @return A block object, or null when no block was found
+	 * @throws Exception
+	 */
 	BlockResult eth_getUncleByBlockHashAndIndex(String blockHash,
 			String uncleIdx) throws Exception;
 
+	/**
+	 * Returns information about a block by block number.
+	 * 
+	 * @param bnOrId
+	 *            integer of a block number, or the string "earliest", "latest"
+	 *            or "pending
+	 * @param fullTransactionObjects
+	 *            If true it returns the full transaction objects, if false only
+	 *            the hashes of the transactions.
+	 * @return A block object, or null when no block was found
+	 * @throws Exception
+	 */
+	BlockResult eth_getBlockByNumber(String bnOrId,
+			Boolean fullTransactionObjects) throws Exception;
+
+	/**
+	 * 
+	 * @param blockId
+	 * @param uncleIdx
+	 * @return
+	 * @throws Exception
+	 */
 	BlockResult eth_getUncleByBlockNumberAndIndex(String blockId,
 			String uncleIdx) throws Exception;
 
