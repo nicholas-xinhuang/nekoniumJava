@@ -6,7 +6,6 @@ import java.net.URL;
 import com.googlecode.jsonrpc4j.JsonRpcHttpClient;
 import com.googlecode.jsonrpc4j.ProxyUtil;
 
-
 /**
  * @author Oldbeyond
  */
@@ -18,6 +17,9 @@ public class Gnekonium {
 		this.client = new JsonRpcHttpClient(new URL(neknoniumUrl));
 	}
 
+	/**
+	 * @return Nekonium RPC contains all JSON RPC APIs
+	 */
 	public INekoniumRpc getRPC() {
 		if (nekoniumRpc == null) {
 			this.nekoniumRpc = ProxyUtil.createClientProxy(getClass()
