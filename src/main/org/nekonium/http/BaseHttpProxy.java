@@ -3,6 +3,7 @@ package org.nekonium.http;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import org.json.JSONObject;
+import org.json.JSONArray;
 
 /**
  * @author oldbeyond
@@ -16,28 +17,30 @@ public class BaseHttpProxy implements InvocationHandler {
 
 	public Object invoke(Object proxy, Method m, Object[] args)
 			throws Throwable {
-
-		StringBuilder jsonBody = new StringBuilder();
-		jsonBody.append("{\"jsonrpc\":\"2.0\",\"method\":\"");
-		jsonBody.append(m.getName());
-		jsonBody.append("\",\"params\":[");
-		for (int i = 0; i < args.length; i++) {
-			if (i > 0)
-				jsonBody.append(",");
-			if (args[i] instanceof String)
-				jsonBody.append("\"" + args[i] + "\"");
-			else
-				jsonBody.append(args[i]);
+		JSONObject rpcCallBody = new JSONObject();
+		rpcCallBody.put("jsonrpc", "2.0");
+		rpcCallBody.put("method", m.getName());
+		if (args != null) {
+			JSONArray rpcCallArgs = new JSONArray();
+			for (int i = 0; i < args.length; i++) {
+				if (args[i] instanceof Integer || args[i] instanceof String)
+					rpcCallArgs.put(args[i]);
+				else
+					rpcCallArgs.put(new JSONObject(args[i]));
+			}
+			rpcCallBody.put("params", rpcCallArgs);
 		}
-		jsonBody.append("],\"id\":\"1\"}");
+		rpcCallBody.put("id", "1");
 
 		JSONObject result = null;
 		try {
 			// Do something before the method is called ...
 			// result = m.invoke(obj, args);
-			result = new JSONObject(client.postTextContents("http://127.0.0.1:8293", "UTF-8",
-					null, jsonBody.toString()));
+			result = new JSONObject(client.postTextContents(
+					"http://127.0.0.1:8293", "UTF-8", null,
+					rpcCallBody.toString()));
 			return result.get("result");
+
 		} catch (Exception eBj) {
 			System.out.println(eBj);
 		} finally {
