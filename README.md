@@ -4,7 +4,27 @@
  2. Import lib to your project
  3. Run go-nekonium and enable the module if necessary (e.g.personal, admin)
  
- Example:
+ 
+ You could used the most commonly API by creating a Nekonium Object
+ ```java
+ // Create a new account
+ Nekonium nuko = new Nekonium("http://127.0.0.1:8293");
+ System.out.println(nuko.createNewAccount("Your password"));
+ ```
+  ```java
+ // Check Balance
+ Nekonium nuko = new Nekonium("Your address", "http://127.0.0.1:8293");
+ System.out.println(nuko.getBalance(NukoUnit.nuko));
+ ```
+ 
+ ```java
+ // Send Transaction
+ Nekonium nuko = new Nekonium("Your address", "http://127.0.0.1:8293");
+ nuko.unlock("Your password", 30);
+ System.out.println(nuko.sendTransaction("Address to send", 1));
+ ```
+ 
+You could also call RPC directly by using GNekonium Object
 ```java
   Package com.example;
   import org.nekonium.jsonrpc.*;
