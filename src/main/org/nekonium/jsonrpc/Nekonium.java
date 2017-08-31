@@ -19,7 +19,7 @@ public class Nekonium {
 	 *            Nekonium address
 	 * @param endpoint
 	 *            Nekonium Blockchain URL
-	 * @throws Exception
+	 * @throws Exceptionf
 	 */
 	public Nekonium(final String address, final String endpoint)
 			throws Exception {
