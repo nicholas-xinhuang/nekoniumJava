@@ -9,9 +9,9 @@ import org.json.JSONArray;
  * @author oldbeyond
  */
 public class BaseHttpProxy implements InvocationHandler {
-	BaseHttpClient client;
+	private BaseHttpClient client;
 
-	public BaseHttpProxy(BaseHttpClient client) {
+	public BaseHttpProxy(final BaseHttpClient client) {
 		this.client = client;
 	}
 
@@ -33,19 +33,14 @@ public class BaseHttpProxy implements InvocationHandler {
 		rpcCallBody.put("id", "1");
 
 		JSONObject result = null;
-		try {
-			// Do something before the method is called ...
-			// result = m.invoke(obj, args);
-			result = new JSONObject(client.postTextContents(
-					"http://127.0.0.1:8293", "UTF-8", null,
-					rpcCallBody.toString()));
-			return result.get("result");
 
-		} catch (Exception eBj) {
-			System.out.println(eBj);
-		} finally {
-			// Do something after the method is called ...
+		result = new JSONObject(client.postTextContents("UTF-8", null,
+				rpcCallBody.toString()));
+		if (result.has("result"))
+			return result.get("result");
+		else {
+			JSONObject error = (JSONObject) result.get("error");
+			throw new Exception(error.get("message").toString());
 		}
-		return result;
 	}
 }

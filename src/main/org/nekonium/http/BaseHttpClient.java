@@ -8,6 +8,17 @@ public class BaseHttpClient {
 	protected String userAgent = null;
 	protected String cookie = null;
 	private int lastStatusCode;
+	private String endpoint;
+
+	public BaseHttpClient(String endpoint) {
+		this.endpoint = endpoint;
+	}
+
+	public String postTextContents(String i_charset,
+			String[][] i_additional_header, String i_body) throws IOException {
+		return postTextContents(endpoint, i_charset, i_additional_header,
+				i_body);
+	}
 
 	public String postTextContents(String url, String i_charset,
 			String[][] i_additional_header, String i_body) throws IOException {
@@ -74,10 +85,10 @@ public class BaseHttpClient {
 		// body部受信
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new InputStreamReader(
-					con.getInputStream(), i_char_set));
+			br = new BufferedReader(new InputStreamReader(con.getInputStream(),
+					i_char_set));
 		} catch (UnsupportedEncodingException e) {
-			//throw new NyanSatRuntimeException(e);
+			// throw new NyanSatRuntimeException(e);
 		}
 		char[] cbuf = new char[4096];
 		int l = br.read(cbuf);
@@ -96,8 +107,9 @@ public class BaseHttpClient {
 
 			String body = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"0x481Dac54c531c186bDF9d021A95f2c414065e000\", \"latest\"],\"id\":2}";
 
-			System.out.println(postTextContents("http://127.0.0.1:8293", "UTF-8", null, body));
-			//System.out.println(url.getResponseCode());
+			System.out.println(postTextContents("http://127.0.0.1:8293",
+					"UTF-8", null, body));
+			// System.out.println(url.getResponseCode());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

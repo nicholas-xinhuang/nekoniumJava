@@ -20,7 +20,7 @@ public class Gnekonium {
 
 	public Gnekonium(final String neknoniumUrl) throws MalformedURLException {
 		// this.client = new JsonRpcHttpClient(new URL(neknoniumUrl));
-		BaseHttpClient client = new BaseHttpClient();
+		BaseHttpClient client = new BaseHttpClient("http://127.0.0.1:8293");
 		httpProxy = new BaseHttpProxy(client);
 	}
 
