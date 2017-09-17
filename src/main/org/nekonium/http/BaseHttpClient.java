@@ -88,7 +88,7 @@ public class BaseHttpClient {
 			br = new BufferedReader(new InputStreamReader(con.getInputStream(),
 					i_char_set));
 		} catch (UnsupportedEncodingException e) {
-			// throw new NyanSatRuntimeException(e);
+			throw new IllegalArgumentException(e);
 		}
 		char[] cbuf = new char[4096];
 		int l = br.read(cbuf);
@@ -98,21 +98,5 @@ public class BaseHttpClient {
 		}
 		br.close();
 		return b.toString();
-	}
-
-	public void main() {
-		try {
-			HttpURLConnection url = makeConnection("http://127.0.0.1:8293",
-					"POST");
-
-			String body = "{\"jsonrpc\":\"2.0\",\"method\":\"eth_getBalance\",\"params\":[\"0x481Dac54c531c186bDF9d021A95f2c414065e000\", \"latest\"],\"id\":2}";
-
-			System.out.println(postTextContents("http://127.0.0.1:8293",
-					"UTF-8", null, body));
-			// System.out.println(url.getResponseCode());
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 }

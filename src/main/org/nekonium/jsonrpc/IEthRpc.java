@@ -1,7 +1,5 @@
 package org.nekonium.jsonrpc;
 
-import java.util.Arrays;
-
 import org.nekonium.jsonrpc.parameters.FilterRequest;
 import org.nekonium.jsonrpc.parameters.TransactionArgs;
 import org.nekonium.jsonrpc.returns.BlockResult;
@@ -22,7 +20,7 @@ public interface IEthRpc {
 	 * @return The SHA3 result of the given string.
 	 * @throws Exception
 	 */
-	String web3_sha3(String data) throws Exception;
+	String web3_sha3(String data) throws NukoRpcException;
 
 	/**
 	 * @return Returns the current network id.
@@ -92,7 +90,7 @@ public interface IEthRpc {
 	 * @return integer of the current balance in wei.
 	 * @throws Exception
 	 */
-	String eth_getBalance(String address, String block) throws Exception;
+	String eth_getBalance(String address, String block) throws NukoRpcException;
 
 	/**
 	 * Returns the value from a storage position at a given address.
@@ -108,7 +106,7 @@ public interface IEthRpc {
 	 * @throws Exception
 	 */
 	String eth_getStorageAt(String address, String storageIdx, String blockId)
-			throws Exception;
+			throws NukoRpcException;
 
 	/**
 	 * Returns the number of transactions sent from an address.
@@ -122,7 +120,7 @@ public interface IEthRpc {
 	 * @throws Exception
 	 */
 	String eth_getTransactionCount(String address, String blockId)
-			throws Exception;
+			throws NukoRpcException;
 
 	/**
 	 * Returns the number of transactions in a block from a block matching the
@@ -134,7 +132,7 @@ public interface IEthRpc {
 	 * @throws Exception
 	 */
 	String eth_getBlockTransactionCountByHash(String blockHash)
-			throws Exception;
+			throws NukoRpcException;
 
 	/**
 	 * Returns the number of transactions in a block from a block matching the
@@ -146,7 +144,7 @@ public interface IEthRpc {
 	 * @return integer of the number of transactions in this block.
 	 * @throws Exception
 	 */
-	String eth_getBlockTransactionCountByNumber(String bnOrId) throws Exception;
+	String eth_getBlockTransactionCountByNumber(String bnOrId) throws NukoRpcException;
 
 	/**
 	 * Returns the number of uncles in a block from a block matching the given
@@ -156,7 +154,7 @@ public interface IEthRpc {
 	 * @return integer of the number of uncles in this block.
 	 * @throws Exception
 	 */
-	String eth_getUncleCountByBlockHash(String blockHash) throws Exception;
+	String eth_getUncleCountByBlockHash(String blockHash) throws NukoRpcException;
 
 	/**
 	 * Returns the number of uncles in a block from a block matching the given
@@ -168,7 +166,7 @@ public interface IEthRpc {
 	 * @return integer of the number of uncles in this block.
 	 * @throws Exception
 	 */
-	String eth_getUncleCountByBlockNumber(String bnOrId) throws Exception;
+	String eth_getUncleCountByBlockNumber(String bnOrId) throws NukoRpcException;
 
 	/**
 	 * Returns code at a given address.
@@ -181,7 +179,7 @@ public interface IEthRpc {
 	 * @return the code from the given address.
 	 * @throws Exception
 	 */
-	String eth_getCode(String addr, String bnOrId) throws Exception;
+	String eth_getCode(String addr, String bnOrId) throws NukoRpcException;
 
 	/**
 	 * The sign method calculates an Ethereum specific signature with:
@@ -195,7 +193,7 @@ public interface IEthRpc {
 	 * @return
 	 * @throws Exception
 	 */
-	String eth_sign(String addr, String data) throws Exception;
+	String eth_sign(String addr, String data) throws NukoRpcException;
 
 	/**
 	 * Creates new message call transaction or a contract creation, if the data
@@ -208,7 +206,7 @@ public interface IEthRpc {
 	 * @throws Exception
 	 */
 	String eth_sendTransaction(TransactionArgs transactionArgs)
-			throws Exception;
+			throws NukoRpcException;
 
 	/**
 	 * Creates new message call transaction or a contract creation for signed
@@ -220,7 +218,7 @@ public interface IEthRpc {
 	 *         transaction is not yet available.
 	 * @throws Exception
 	 */
-	String eth_sendRawTransaction(String rawData) throws Exception;
+	String eth_sendRawTransaction(String rawData) throws NukoRpcException;
 
 	/**
 	 * Executes a new message call immediately without creating a transaction on
@@ -234,7 +232,7 @@ public interface IEthRpc {
 	 * @return the return value of executed contract.
 	 * @throws Exception
 	 */
-	String eth_call(TransactionArgs args, String bnOrId) throws Exception;
+	String eth_call(TransactionArgs args, String bnOrId) throws NukoRpcException;
 
 	String eth_estimateGas(TransactionArgs args) throws Exception;
 
@@ -260,7 +258,7 @@ public interface IEthRpc {
 	 * @throws Exception
 	 */
 	BlockResult eth_getUncleByBlockHashAndIndex(String blockHash,
-			String uncleIdx) throws Exception;
+			String uncleIdx) throws NukoRpcException;
 
 	/**
 	 * Returns information about a block by block number.
@@ -275,7 +273,7 @@ public interface IEthRpc {
 	 * @throws Exception
 	 */
 	BlockResult eth_getBlockByNumber(String bnOrId,
-			Boolean fullTransactionObjects) throws Exception;
+			Boolean fullTransactionObjects) throws NukoRpcException;
 
 	/**
 	 * 
@@ -285,7 +283,7 @@ public interface IEthRpc {
 	 * @throws Exception
 	 */
 	BlockResult eth_getUncleByBlockNumberAndIndex(String blockId,
-			String uncleIdx) throws Exception;
+			String uncleIdx) throws NukoRpcException;
 
 	String[] eth_getCompilers();
 
@@ -293,7 +291,7 @@ public interface IEthRpc {
 
 	String eth_pendingTransactions();
 
-	String eth_newFilter(FilterRequest fr) throws Exception;
+	String eth_newFilter(FilterRequest fr) throws NukoRpcException;
 
 	// String eth_newFilter(String fromBlock, String toBlock, String address,
 	// String[] topics) throws Exception;
@@ -308,7 +306,7 @@ public interface IEthRpc {
 
 	Object[] eth_getFilterLogs(String id);
 
-	Object[] eth_getLogs(FilterRequest fr) throws Exception;
+	Object[] eth_getLogs(FilterRequest fr) throws NukoRpcException;
 
 	String eth_getWork();
 

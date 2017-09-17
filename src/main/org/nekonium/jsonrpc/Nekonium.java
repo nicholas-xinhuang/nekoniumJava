@@ -1,5 +1,6 @@
 package org.nekonium.jsonrpc;
 
+import java.lang.reflect.UndeclaredThrowableException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 
@@ -80,15 +81,20 @@ public class Nekonium {
 	 *            time duration for account unlock, 0 for forever
 	 * @return true if account is successfully unlocked
 	 */
-	public Boolean unlock(String password, Integer duration) {
-		return getRPC().personal_unlockAccount(addr, password, duration);
+	public Boolean unlock(String password, Integer duration)
+			throws NukoRpcException {
+		try {
+			return getRPC().personal_unlockAccount(addr, password, duration);
+		} catch (UndeclaredThrowableException ex) {
+			throw new NukoRpcException(ex.getCause().getMessage());
+		}
 	}
 
 	/**
 	 * @return the balance in Nuko Unit
 	 * @throws Exception
 	 */
-	public Double getBalance() throws Exception {
+	public Double getBalance() throws NukoRpcException {
 		return getBalance(NukoUnit.Nuko);
 	}
 
@@ -98,7 +104,7 @@ public class Nekonium {
 	 * @return the balance in Nuko Unit
 	 * @throws Exception
 	 */
-	public Double getBalance(NukoUnit unit) throws Exception {
+	public Double getBalance(NukoUnit unit) throws NukoRpcException {
 		final String balance = getRPC().eth_getBalance(addr, "latest");
 		BigDecimal value = new BigDecimal(new BigInteger(balance.substring(2),
 				16).toString());
@@ -118,7 +124,7 @@ public class Nekonium {
 	 * @throws Exception
 	 */
 	public String sendTransaction(String toAddress, Double amount)
-			throws Exception {
+			throws NukoRpcException {
 		return sendTransaction(toAddress, amount, NukoUnit.Nuko);
 	}
 
@@ -135,7 +141,7 @@ public class Nekonium {
 	 * @throws Exception
 	 */
 	public String sendTransaction(String toAddress, Double amount, NukoUnit unit)
-			throws Exception {
+			throws NukoRpcException {
 		final String DEFAULT_GASPRICE = "5000000000";
 		final String DEFAULT_GAS = "90000";
 
@@ -152,6 +158,11 @@ public class Nekonium {
 
 		TransactionArgs transactionArgs = new TransactionArgs(addr, toAddress,
 				gas, gasPrice, sentAmountHex);
-		return getRPC().eth_sendTransaction(transactionArgs);
+		try {
+			return getRPC().eth_sendTransaction(transactionArgs);
+		}
+		catch (UndeclaredThrowableException ex) {
+			throw new NukoRpcException(ex.getCause().getMessage());
+		}
 	}
 }
